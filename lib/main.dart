@@ -8,7 +8,7 @@ import 'pages/home_page.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(create: (context)=>TimesRepository(),
-    child:MeuAplicativo() ,
+    child:const MeuAplicativo() ,
   ));
 }
 
@@ -25,7 +25,7 @@ class MeuAplicativo extends StatelessWidget {
       debugShowCheckedModeBanner:false,
       theme: ThemeData(
         primaryColor: Colors.green,visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: HomePage(),
+      home: const HomePage(),
       
     );
   }

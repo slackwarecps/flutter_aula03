@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:teste222/models/time.dart';
-import 'package:teste222/models/titulo.dart';
 import 'package:teste222/pages/add_titulo_page.dart';
 import 'package:teste222/pages/edit_titulo_page.dart';
 import 'package:teste222/repositories/times_repository.dart';

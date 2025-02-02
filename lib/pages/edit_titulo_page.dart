@@ -47,9 +47,9 @@ class _EditTituloPageState extends State<EditTituloPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar Titulo'),
+        title: const Text('Editar Titulo'),
         backgroundColor: const Color.fromARGB(255, 187, 187, 187),
-        actions:[IconButton(onPressed: editar, icon: Icon(Icons.check))]
+        actions:[IconButton(onPressed: editar, icon: const Icon(Icons.check))]
       ),
       body: Form(
         key: _formKey,
