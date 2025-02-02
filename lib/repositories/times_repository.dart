@@ -8,31 +8,16 @@ class TimesRepository extends ChangeNotifier {
   // Tornar a lista privada e imutável para proteger os dados
   final List<Time> _times = [];
 
-
-  //Retorna uma lista nova
+  // Retorna uma lista imutável para evitar alterações externas
   UnmodifiableListView<Time> get times => UnmodifiableListView(_times);
 
-  // Método para adicionar um título a um time específico
-  void addTitulo({required Time time, required Titulo titulo}) {
-    //adiciona o titulo no time
-    time.titulos.add(titulo);
-    //Notifica os listenters
-    notifyListeners();
-  }
-
-//Ao Editar um Titulo
-  void editTitulo({
-    required Titulo titulo,
-    required String ano,
-    required String campeonato,
-  }) {
-    titulo.campeonato = campeonato;
-    titulo.ano = ano;
-    //notifica os listeners
-    notifyListeners();
-  }
-
+  // Construtor para inicializar os times
   TimesRepository() {
+    _initializeTimes();
+  }
+
+  // Método privado para inicializar os times
+  void _initializeTimes() {
     _times.addAll([
       Time(
         nome: 'Ponte Preta',
@@ -59,5 +44,27 @@ class TimesRepository extends ChangeNotifier {
         cor: Colors.pinkAccent,
       ),
     ]);
+  }
+
+  // Método para adicionar um título a um time específico
+  void addTitulo({required Time time, required Titulo titulo}) {
+    // Adiciona o título ao time
+    time.titulos.add(titulo);
+    // Notifica os listeners sobre a mudança
+    notifyListeners();
+  }
+
+  // Método para editar um título
+  void editTitulo({
+    required Titulo titulo,
+    required String ano,
+    required String campeonato,
+  }) {
+    // Atualiza os dados do título
+    titulo
+      ..ano = ano
+      ..campeonato = campeonato;
+    // Notifica os listeners sobre a mudança
+    notifyListeners();
   }
 }
