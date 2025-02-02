@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:teste222/repositories/times_repository.dart';
 import 'pages/home_page.dart';
 
@@ -19,7 +20,7 @@ class MeuAplicativo extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Fabio Pereira',
       debugShowCheckedModeBanner:false,
       theme: ThemeData(

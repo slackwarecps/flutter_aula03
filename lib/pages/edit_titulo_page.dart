@@ -1,53 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:teste222/models/time.dart';
+import 'package:teste222/models/titulo.dart';
 import 'package:teste222/repositories/times_repository.dart';
-import '../models/titulo.dart';
 
-// Pagina/Componente Visual
-// pagina de Add Titulo
-class AddTituloPage extends StatefulWidget {
-  Time time;
-
-  AddTituloPage({super.key, required this.time});
+class EditTituloPage extends StatefulWidget {
+  Titulo titulo;
+  EditTituloPage({super.key, required this.titulo});
 
   @override
-  State<AddTituloPage> createState() => _AddTituloPageState();
+  State<EditTituloPage> createState() => _EditTituloPageState();
 }
 
-// Controle de Estado
-class _AddTituloPageState extends State<AddTituloPage> {
-  //Controllers para os campos do formulário
+class _EditTituloPageState extends State<EditTituloPage> {
+    //Controllers para os campos do formulário
   final _campeonato = TextEditingController();
   final _ano = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final  _formKey = GlobalKey<FormState>();
 
-  save() {
-    // Recuperar as info sem ouvir o repositorio no caso de salvar
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _ano.text = widget.titulo.ano;
+    _campeonato.text = widget.titulo.campeonato;
+  }
+
+  editar(){
+        // Recuperar as info sem ouvir o repositorio no caso de salvar
     // False = vai apenas salvar e nao vai reeenderizar nada.
-    Provider.of<TimesRepository>(context, listen: false).addTitulo(
-      time: widget.time,
-      titulo: Titulo(
+    Provider.of<TimesRepository>(context, listen: false).editTitulo(
+      titulo:widget.titulo,
         campeonato: _campeonato.text,
         ano: _ano.text,
-      ),
+  
     );
 
     Get.back();
 
-    Get.snackbar('Sucesso', 'Cadastro com sucesso!',
-        backgroundColor: Colors.grey[900],
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.time.cor,
-        title: const Text('Adicionar Titulo'),
+        title: Text('Editar Titulo'),
+        backgroundColor: const Color.fromARGB(255, 187, 187, 187),
+        actions:[IconButton(onPressed: editar, icon: Icon(Icons.check))]
       ),
       body: Form(
         key: _formKey,
@@ -90,30 +92,7 @@ class _AddTituloPageState extends State<AddTituloPage> {
                 },
               ),
             ),
-            Expanded(
-                child: Container(
-              alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.all(4),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    save();
-                  }
-                },
-                child: const Row(
-                  children: [
-                    Icon(Icons.check),
-                    Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        'Salvar',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ))
+           
           ],
         ),
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:teste222/models/time.dart';
 import 'package:teste222/models/titulo.dart';
 import 'package:teste222/pages/add_titulo_page.dart';
+import 'package:teste222/pages/edit_titulo_page.dart';
 import 'package:teste222/repositories/times_repository.dart';
 
 class TimePage extends StatefulWidget {
@@ -19,10 +21,9 @@ class _TimePageState extends State<TimePage> {
 
 //on click do Botao Add
 tituloPage(){
-  Navigator.push(context, MaterialPageRoute(
-    builder: (_)=> AddTituloPage( time: widget.time ),
-  ),
-  );
+
+  //Vai para a pagina anterior
+  Get.to(()=>AddTituloPage( time: widget.time ));
 }
 
 
@@ -92,7 +93,11 @@ tituloPage(){
         return ListTile(
           leading: const Icon(Icons.emoji_events),
           title: Text(time.titulos[index].campeonato),
-          subtitle: Text('Ano: ${time.titulos[index].ano}'),
+          trailing: Text('Ano: ${time.titulos[index].ano}'),
+          onTap: (){
+            Get.to(EditTituloPage(titulo: time.titulos[index]),
+            fullscreenDialog: true);
+          },
         );
       },
       separatorBuilder: (_, __) => const Divider(),
