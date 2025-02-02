@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:teste222/models/time.dart';
 import 'package:teste222/pages/time_page.dart';
 import 'package:teste222/repositories/times_repository.dart';
+import 'package:teste222/widgets/brasao.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,32 +32,30 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Brasileirao Aula 3'),
       ),
       body: Consumer<TimesRepository>(
-        builder: (context,repositorio,child){
+        builder: (context, repositorio, child) {
           return ListView.separated(
-          itemCount: repositorio.times.length,
-          itemBuilder: (BuildContext contexto, int time) {
-            final List<Time> tabela = repositorio.times;
-            return ListTile(
-              leading: Image.network(tabela[time].brasao),
-              title: Text(tabela[time].nome),
-              subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
-              trailing: Text(tabela[time].pontos.toString()),
-              onTap: () {
-
-                Get.to(()=>
-                  TimePage(
+            itemCount: repositorio.times.length,
+            itemBuilder: (BuildContext contexto, int time) {
+              final List<Time> tabela = repositorio.times;
+              return ListTile(
+                leading: Brasao(
+                  image: tabela[time].brasao,
+                  width: 100,
+                ),
+                title: Text(tabela[time].nome),
+                subtitle: Text('Titulos: ${tabela[time].titulos.length}'),
+                trailing: Text(tabela[time].pontos.toString()),
+                onTap: () {
+                  Get.to(() => TimePage(
                         key: Key(tabela[time].nome),
                         time: tabela[time],
-                      )
-                );
-
-   
-              },
-            );
-          },
-          separatorBuilder: (_, ___) => const Divider(),
-          padding: const EdgeInsets.all(16),
-        );
+                      ));
+                },
+              );
+            },
+            separatorBuilder: (_, ___) => const Divider(),
+            padding: const EdgeInsets.all(16),
+          );
         },
       ),
     );

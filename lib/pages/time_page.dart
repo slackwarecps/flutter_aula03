@@ -6,6 +6,7 @@ import 'package:teste222/models/titulo.dart';
 import 'package:teste222/pages/add_titulo_page.dart';
 import 'package:teste222/pages/edit_titulo_page.dart';
 import 'package:teste222/repositories/times_repository.dart';
+import 'package:teste222/widgets/brasao.dart';
 
 class TimePage extends StatefulWidget {
   final Time time; // Tornar a variável `time` final para indicar que ela não será alterada após a inicialização.
@@ -55,7 +56,10 @@ tituloPage(){
             children: [
               Padding(
                 padding: const EdgeInsets.all(24), 
-                child: Image.network(widget.time.brasao),
+                child: Brasao(
+                  image: widget.time.brasao,
+                  width: 250,
+                ),
               ),
               Text('Pontos: ${widget.time.pontos}',style: const TextStyle(fontSize: 22),)
             ],
