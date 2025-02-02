@@ -1,23 +1,32 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:teste222/models/time.dart';
 import 'package:teste222/models/titulo.dart';
 
-class TimesRepository {
+class TimesRepository extends ChangeNotifier{
   // Tornar a lista privada e imutável para proteger os dados
   final List<Time> _times = [];
 
   // Getter para acessar a lista de times de forma segura
-  List<Time> get times => List.unmodifiable(_times);
+  //List<Time> get times => List.unmodifiable(_times);
+
+  //Retorna uma lista nova
+  UnmodifiableListView<Time> get times => UnmodifiableListView(_times);
+
+
 
   // Método para adicionar um título a um time específico
   void addTitulo({required Time time, required Titulo titulo}) {
-    final index = _times.indexOf(time);
-    if (index != -1) {
-      _times[index].titulos.add(titulo);
-    } else {
-      throw Exception('Time não encontrado na lista.');
-    }
+  
+      //adiciona o titulo no time
+      time.titulos.add(titulo);
+      //Notifica os listenters
+      notifyListeners();
+
   }
+
+
 
 TimesRepository(){
   _times.addAll([

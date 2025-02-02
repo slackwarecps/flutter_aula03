@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teste222/repositories/times_repository.dart';
 import 'pages/home_page.dart';
 
+
 void main() {
-  runApp(Nada());
+  runApp(
+    ChangeNotifierProvider(create: (context)=>TimesRepository(),
+    child:MeuAplicativo() ,
+  ));
 }
 
 
 
-class Nada extends StatelessWidget {
-  const Nada({super.key});
+class MeuAplicativo extends StatelessWidget {
+  const MeuAplicativo({super.key});
 
-
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

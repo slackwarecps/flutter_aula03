@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:teste222/models/time.dart';
 import 'package:teste222/models/titulo.dart';
 import 'package:teste222/pages/add_titulo_page.dart';
+import 'package:teste222/repositories/times_repository.dart';
 
 class TimePage extends StatefulWidget {
   final Time time; // Tornar a variável `time` final para indicar que ela não será alterada após a inicialização.
@@ -15,23 +17,15 @@ class TimePage extends StatefulWidget {
 
 class _TimePageState extends State<TimePage> {
 
+//on click do Botao Add
 tituloPage(){
   Navigator.push(context, MaterialPageRoute(
-    builder: (_)=> AddTituloPage( time: widget.time, onSave:addTitulo ),
+    builder: (_)=> AddTituloPage( time: widget.time ),
   ),
   );
 }
 
-addTitulo(Titulo titulo){
-  setState(() {
-    widget.time.titulos.add(titulo);
-  });
 
-  Navigator.pop(context);
-
-  ScaffoldMessenger.of(context)
-    .showSnackBar(const SnackBar(content: Text('Salvo com sucesso!')));
-}
 
 
   @override
@@ -74,7 +68,13 @@ addTitulo(Titulo titulo){
 
   // Método para construir a aba de títulos
   Widget _buildTitulosTab() {
-    final quantidade = widget.time.titulos.length;
+
+    //inicializa o provider e filtra o resultado.
+    final time = Provider.of<TimesRepository>(context)
+        .times
+        .firstWhere((t)=>t.nome ==widget.time.nome);
+
+    final quantidade = time.titulos.length;
 
     if (quantidade == 0) {
       return const Center(
@@ -88,11 +88,11 @@ addTitulo(Titulo titulo){
     return ListView.separated(
       itemCount: quantidade,
       itemBuilder: (BuildContext context, int index) {
-        final titulo = widget.time.titulos[index];
+        
         return ListTile(
           leading: const Icon(Icons.emoji_events),
-          title: Text(titulo.campeonato),
-          subtitle: Text('Ano: ${titulo.ano}'),
+          title: Text(time.titulos[index].campeonato),
+          subtitle: Text('Ano: ${time.titulos[index].ano}'),
         );
       },
       separatorBuilder: (_, __) => const Divider(),

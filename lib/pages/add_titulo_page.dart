@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:teste222/models/time.dart';
+import 'package:teste222/repositories/times_repository.dart';
 import '../models/titulo.dart';
 
 // Pagina/Componente Visual
 // pagina de Add Titulo
 class AddTituloPage extends StatefulWidget {
   Time time;
-  ValueChanged<Titulo> onSave;
-  AddTituloPage({super.key, required this.time, required this.onSave});
+
+  AddTituloPage({super.key, required this.time});
 
   @override
   State<AddTituloPage> createState() => _AddTituloPageState();
@@ -19,6 +21,24 @@ class _AddTituloPageState extends State<AddTituloPage> {
   final _campeonato = TextEditingController();
   final _ano = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+
+  save(){
+    // Recuperar as info sem ouvir o repositorio no caso de salvar
+    // False = vai apenas salvar e nao vai reeenderizar nada. 
+    Provider.of<TimesRepository>(context,listen:false).addTitulo(
+      time: widget.time, 
+      titulo: Titulo(
+        campeonato: _campeonato.text, 
+        ano: _ano.text,
+        ),
+      );
+    
+      Navigator.pop(context);
+
+  ScaffoldMessenger.of(context)
+    .showSnackBar(const SnackBar(content: Text('Salvo com sucesso!')));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +96,7 @@ class _AddTituloPageState extends State<AddTituloPage> {
               onPressed: () {
 
                 if(_formKey.currentState!.validate()){
-                  widget.onSave(
-                      Titulo(campeonato: _campeonato.text, ano: _ano.text)
-                  );
+                 save();
                 }
 
               },
